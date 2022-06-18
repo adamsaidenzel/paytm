@@ -22,9 +22,31 @@ public class IndianFoodEntity {
 	
 	@Column(name = "rating")
 	Integer rating;
-
+	
+	@Column(name="coupon_available")
+	boolean couponAvailable;
+	
+	@Column(name="meal-card-available")
+    boolean mealCardAvailable;
+	
 	public Long getId() {
 		return id;
+	}
+
+	public boolean isCouponAvailable() {
+		return couponAvailable;
+	}
+
+	public void setCouponAvailable(boolean couponAvailable) {
+		this.couponAvailable = couponAvailable;
+	}
+
+	public boolean isMealCardAvailable() {
+		return mealCardAvailable;
+	}
+
+	public void setMealCardAvailable(boolean mealCardAvailable) {
+		this.mealCardAvailable = mealCardAvailable;
 	}
 
 	public void setId(Long id) {
