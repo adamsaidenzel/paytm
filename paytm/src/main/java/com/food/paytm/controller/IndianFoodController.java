@@ -3,6 +3,10 @@ package com.food.paytm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.food.paytm.entities.IndianFoodEntity;
 import com.food.paytm.service.IndianFoodService;
@@ -24,6 +29,9 @@ public class IndianFoodController {
 	
 	@Autowired
 	IndianFoodService indianFoodSvc;
+	
+	@Autowired
+	RestTemplate restTemplate;
 	
 	@GetMapping("/welcome-message")
 	public String getWelcomeMessage() {
@@ -63,5 +71,14 @@ public class IndianFoodController {
 		indianFoodSvc.deleteFoodItemById(id);
 	}
 	
+	@GetMapping("/price-details")
+	public Integer getPriceDetails() {
+		String url = "http://localhost:8083/payment/total-cost";
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity entity = new HttpEntity(headers);
+		Integer priceDetails = restTemplate.exchange(url, HttpMethod.GET,entity , Integer.class).getBody();
+		return priceDetails;
+	}
 	
 }
